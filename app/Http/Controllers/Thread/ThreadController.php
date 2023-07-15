@@ -4,11 +4,31 @@ namespace App\Http\Controllers\Thread;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ThreadRequest;
+use App\Http\Resources\ThreadResource;
+use App\Models\Thread;
 use Exception;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
 {
+
+
+    public function index(){
+        try{
+            $threads = Thread::with('user')->latest()->get();
+            $threads = ThreadResource::collection($threads);
+            return response([
+                'threads' => $threads,
+            ]);
+        }
+        catch(Exception $e){
+            return response([
+                    'message' => $e->getMessage(),
+                ],500);
+        }
+    }
+
+
     public function create_thread(ThreadRequest $threadRequest){
 
         try{
@@ -49,6 +69,15 @@ class ThreadController extends Controller
             return response([
                     'message' => $e->getMessage(),
                 ],500);
+        }
+    }
+
+    public function react(){
+        tr{
+
+        }
+        catch(Exception $e){
+            
         }
     }
 }
