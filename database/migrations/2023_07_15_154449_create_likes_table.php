@@ -18,7 +18,7 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
 
-            $table->foreign('id')->on('users')->references('id');
+            $table->foreign('user_id')->on('users')->references('id');
             $table->foreign('thread_id')->on('threads')->references('id');
             $table->timestamps();
         });

@@ -16,11 +16,7 @@ class Like extends Model
         'thread_id',
     ];
 
-    public function user(): BelongsTo{
-        return $this->belongsTo(User::class);
-    }
-
-    public function likes(): HasMany{
-        return $this->hasMany(Like::class);
+    public function thread(): BelongsTo{
+        return $this->belongsTo(Thread::class);
     }
 }

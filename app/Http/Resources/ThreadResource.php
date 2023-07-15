@@ -20,6 +20,7 @@ class ThreadResource extends JsonResource
             'image' => $this->image,
             'created_at' => $this->created_at->diffForHumans(),
             'user' => $this->user,
+            'likes' => $this->likes->count(),
         ];
     }
 }

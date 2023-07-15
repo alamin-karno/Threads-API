@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Thread;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ThreadRequest;
 use App\Http\Resources\ThreadResource;
+use App\Models\Like;
 use App\Models\Thread;
 use Exception;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class ThreadController extends Controller
 
     public function index(){
         try{
-            $threads = Thread::with('user')->latest()->get();
+            $threads = Thread::with('user')->with('likes')->latest()->get();
             $threads = ThreadResource::collection($threads);
             return response([
                 'threads' => $threads,
@@ -72,12 +73,32 @@ class ThreadController extends Controller
         }
     }
 
-    public function react(){
-        tr{
+    public function react($thread_id){
+        try{
+            $thread = Like::whereThreadId($thread_id)->whereUserId(auth()->id())->first();
 
+            if($thread){
+                Like::whereThreadId($thread_id)->whereUserId(auth()->id())->delete();
+
+                return response([
+                    'message' => 'UnLiked Thread',
+                ],200);
+
+            }else{
+                Like::create([
+                    'user_id' => auth()->id(),
+                    'thread_id' => $thread_id,
+                ]);
+
+                return response([
+                    'message' => 'Liked Thread',
+                ],201);
+            }
         }
         catch(Exception $e){
-            
+            return response([
+                'message' => $e->getMessage(),
+            ],500);
         }
     }
 }
