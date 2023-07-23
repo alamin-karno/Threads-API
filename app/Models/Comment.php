@@ -7,26 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Thread extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'body',
-        'image'
+        'thread_id',
+        'body'
     ];
 
-    public function user() : BelongsTo
+    public function thread(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Thread::class);
     }
 
-    public function likes() : HasMany{
-        return $this->hasMany(Like::class);
+    public function subComments(): HasMany
+    {
+        return $this->hasMany(SubComment::class);
     }
 
-    public function comments() : HasMany{
-        return $this->hasMany(Comment::class);
-    }
 }

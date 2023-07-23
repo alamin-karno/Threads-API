@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ThreadResource extends JsonResource
+class SubCommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,10 @@ class ThreadResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'comment_id' => $this->comment_id,
             'body' => $this->body,
-            'image' => $this->image,
             'created_at' => $this->created_at->diffForHumans(),
-            'user' => $this->user,
-            'likes' => $this->likes->count(),
-            'comments' => CommentResource::collection($this->comments),
         ];
     }
 }
