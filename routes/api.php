@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\Thread\FriendController;
 use App\Http\Controllers\Thread\ThreadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/thread/like/{thread_id}',[ThreadController::class,'react']);
     Route::post('/thread/comment',[ThreadController::class,'comment']);
     Route::post('/thread/sub-comment',[ThreadController::class,'subComment']);
+    Route::post('/thread/follow/{following_id}',[FriendController::class,'followAndUnFollow']);
 });
 
 Route::post('/register',[AuthenticationController::class,'register']);
